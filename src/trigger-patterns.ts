@@ -9,21 +9,21 @@ export class TriggerPatterns {
 		// http://tug.ctan.org/info/biblatex-cheatsheet/biblatex-cheatsheet.pdf
 		// https://de.overleaf.com/learn/latex/Natbib_citation_styles
 		/* standard */
-		/\\(cite|parencite|footcite|footcitetext)\*?(?<optional>\[.*\]){0,2}{$/i,
+		/\\(cite|parencite|footcite|footcitetext)\*?(?<optional>\[.*\]){0,2}{(.+,\s?)*$/i,
 		/* common */
-		/\\(text|smart|super)cite\*?(?<optional>\[.*\]){0,2}{$/i,
+		/\\(text|smart|super)cite\*?(?<optional>\[.*\]){0,2}{(.+,\s?)*$/i,
 		/* style-independent */
-		/\\autocite\*?(?<optional>\[.*\]){0,2}{$/i,
+		/\\autocite\*?(?<optional>\[.*\]){0,2}{(.+,\s?)*$/i,
 		/* text */
-		/\\cite(author|title|year|date|url)\*?(?<optional>\[.*\]){0,2}{$/i,
+		/\\cite(author|title|year|date|url)\*?(?<optional>\[.*\]){0,2}{(.+,\s?)*$/i,
 		/* multi-volume */
-		/\\(p|f|ft|s|t|a)?volcite\*?(?<optional>\[.*\]){0,3}{$/i,
+		/\\(p|f|ft|s|t|a)?volcite\*?(?<optional>\[.*\]){0,3}{(.+,\s?)*$/i,
 		/* standalone */
-		/\\(foot)?fullcite\*?(?<optional>\[.*\]){0,2}{$/i,
+		/\\(foot)?fullcite\*?(?<optional>\[.*\]){0,2}{(.+,\s?)*$/i,
 		/* bibliography without citation */
-		/\\(no|note|pnote|fnote)cite\*?(?<optional>\[.*\]){0,2}{$/i,
+		/\\(no|note|pnote|fnote)cite\*?(?<optional>\[.*\]){0,2}{(.+,\s?)*$/i,
 		/* natbib */
-		/\\cite(t|p)\*?{$/i,
+		/\\cite(t|p)\*?{(.+,\s?)*$/i,
 	];
 
 	public static getDefaultPatterns(): RegExp[] {
@@ -51,6 +51,6 @@ export class TriggerPatterns {
 		const conf = vscode.workspace.getConfiguration(EXTENSION_NAME);
 		const patterns: string[] = conf.get('customPatterns') || [];
 	
-		return patterns.map(p => `\\\\${p}{`).map(p => new RegExp(p, 'i'));
+		return patterns.map(p => `\\\\${p}{(.+,\s?)*`).map(p => new RegExp(p, 'i'));
 	}
 }
